@@ -24,6 +24,12 @@ const eslintConfig = defineConfig([
       "prettier/prettier": "error",
     },
   },
+  {
+    files: ["jest.config.js", "jest.setup.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
