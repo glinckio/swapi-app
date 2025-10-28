@@ -1,3 +1,7 @@
+import { Film } from "./film.types";
+import { Species } from "./species.types";
+import { Vehicle } from "./vehicle.types";
+
 export interface Resident {
   name: string;
   height: string;
