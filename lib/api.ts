@@ -1,4 +1,5 @@
 import env from "@/config/env";
+import type { PlanetResponse } from "@/types";
 
 export async function fetchFromSWAPI<T>(endpoint: string): Promise<T> {
   const url = `${env.NEXT_PUBLIC_API_URL}${endpoint}`;
@@ -11,7 +12,10 @@ export async function fetchFromSWAPI<T>(endpoint: string): Promise<T> {
   return response.json();
 }
 
-export const fetchPlanets = (search?: string, page?: number) => {
+export const fetchPlanets = async (
+  search?: string,
+  page?: number
+): Promise<PlanetResponse> => {
   const params = new URLSearchParams();
   if (search) params.append("search", search);
   if (page) params.append("page", page.toString());

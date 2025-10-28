@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchPlanets as fetchPlanetsFromAPI } from "@/lib/api";
-import type { Planet, PlanetResponse } from "@/types";
+import type { Planet } from "@/types";
 
 interface UsePlanetsOptions {
   search?: string;
@@ -32,10 +32,7 @@ export const usePlanets = (options?: UsePlanetsOptions): UsePlanetsResult => {
       if (options?.search) params.append("search", options.search);
       if (options?.page) params.append("page", options.page.toString());
 
-      const data: PlanetResponse = await fetchPlanetsFromAPI(
-        options?.search,
-        options?.page
-      );
+      const data = await fetchPlanetsFromAPI(options?.search, options?.page);
 
       setPlanets(data.results);
       setTotalPages(Math.ceil(data.count / PLANETS_PER_PAGE));
