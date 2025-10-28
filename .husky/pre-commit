@@ -1,1 +1,1 @@
-echo "Skipping lint-staged in branch setup"
+npx lint-staged
