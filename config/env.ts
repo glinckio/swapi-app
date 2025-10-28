@@ -7,4 +7,3 @@ if (typeof window === "undefined" && !env.NEXT_PUBLIC_API_URL) {
 }
 
 export default env;
-
