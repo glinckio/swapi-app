@@ -5,11 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Resident } from "@/types/resident.types";
+import { Resident, ResidentWithDetails } from "@/types/resident.types";
 import { displayValue, capitalizeWords } from "@/utils";
 
 interface ResidentCardProps {
-  resident: Resident;
+  resident: Resident | ResidentWithDetails;
 }
 
 export function ResidentCard({ resident }: ResidentCardProps) {
@@ -53,9 +53,22 @@ export function ResidentCard({ resident }: ResidentCardProps) {
         {resident.species.length > 0 && (
           <div className="mt-4 pt-4 border-t border-gray-700">
             <span className="text-xs text-gray-400">Species</span>
-            <p className="text-sm font-semibold text-purple-400 mt-1">
-              {resident.species.length} species
-            </p>
+            <div className="mt-1 space-y-1">
+              {resident.species.length > 0 &&
+              "speciesDetails" in resident &&
+              resident.speciesDetails &&
+              resident.speciesDetails.length > 0 ? (
+                resident.speciesDetails.map((s, i) => (
+                  <p key={i} className="text-sm font-semibold text-purple-400">
+                    {s.name}
+                  </p>
+                ))
+              ) : (
+                <p className="text-sm font-semibold text-purple-400">
+                  {resident.species.length} species
+                </p>
+              )}
+            </div>
           </div>
         )}
         {resident.vehicles.length > 0 && (
