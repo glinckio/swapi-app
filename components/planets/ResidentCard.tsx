@@ -74,10 +74,24 @@ export function ResidentCard({ resident }: ResidentCardProps) {
         {resident.vehicles.length > 0 && (
           <div className="mt-2">
             <span className="text-xs text-gray-400">Vehicles</span>
-            <p className="text-sm font-semibold text-blue-400 mt-1">
-              {resident.vehicles.length} vehicle
-              {resident.vehicles.length !== 1 ? "s" : ""}
-            </p>
+            <div className="mt-1 space-y-1">
+              {resident.vehicles.length > 0 &&
+              "vehicleDetails" in resident &&
+              resident.vehicleDetails &&
+              resident.vehicleDetails.length > 0 ? (
+                resident.vehicleDetails.map((v, i) => (
+                  <div key={i} className="text-sm text-blue-400">
+                    <p className="font-semibold">{v.name}</p>
+                    <p className="text-xs text-blue-300">{v.model}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm font-semibold text-blue-400">
+                  {resident.vehicles.length} vehicle
+                  {resident.vehicles.length !== 1 ? "s" : ""}
+                </p>
+              )}
+            </div>
           </div>
         )}
       </CardContent>

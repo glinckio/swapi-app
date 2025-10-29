@@ -1,4 +1,4 @@
-import { ResidentCardWithSpecies } from "./ResidentCardWithSpecies";
+import { ResidentCardWithVehicles } from "./ResidentCardWithVehicles";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "./EmptyState";
 import { Resident } from "@/types/resident.types";
@@ -48,7 +48,7 @@ export function PlanetResidentsSection({
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {residents.map((resident) => (
-          <ResidentCardWithSpecies key={resident.url} resident={resident} />
+          <ResidentCardWithVehicles key={resident.url} resident={resident} />
         ))}
       </div>
     </div>
