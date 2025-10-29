@@ -1,4 +1,5 @@
 export { PlanetCard } from "./PlanetCard";
+export { PlanetCardWithFilms } from "./PlanetCardWithFilms";
 export { PlanetCardSkeleton } from "./PlanetCardSkeleton";
 export { PlanetsGrid } from "./PlanetsGrid";
 export { PlanetsPagination } from "./PlanetsPagination";

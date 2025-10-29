@@ -12,6 +12,14 @@ jest.mock("@/hooks/usePlanets");
 
 jest.mock("@/hooks/useDebounce");
 
+jest.mock("@/hooks/useFilms", () => ({
+  useFilms: jest.fn(() => ({
+    films: [],
+    loading: false,
+    error: null,
+  })),
+}));
+
 const mockPush = jest.fn();
 const mockUsePlanets = usePlanetsModule.usePlanets as jest.MockedFunction<
   typeof usePlanetsModule.usePlanets
