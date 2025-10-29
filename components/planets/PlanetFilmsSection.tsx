@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Film } from "@/types";
+import { Film } from "@/types/film.types";
 
 interface PlanetFilmsSectionProps {
   films: Film[];
