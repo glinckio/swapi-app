@@ -5,8 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Resident } from "@/types/resident.types";
 import { displayValue, capitalizeWords } from "@/utils";
-import type { Resident } from "@/types";
 
 interface ResidentCardProps {
   resident: Resident;

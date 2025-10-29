@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchMultiple } from "@/lib/api";
-import type { Resident } from "@/types";
+import { Resident } from "@/types/resident.types";
 
 interface UseResidentsResult {
   residents: Resident[];

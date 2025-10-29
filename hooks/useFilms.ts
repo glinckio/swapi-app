@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchMultiple } from "@/lib/api";
-import type { Film } from "@/types";
+import { Film } from "@/types/film.types";
 
 interface UseFilmsResult {
   films: Film[];
