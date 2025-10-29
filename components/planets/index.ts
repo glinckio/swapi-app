@@ -8,6 +8,7 @@ export { PlanetsHeader } from "./PlanetsHeader";
 export { LoadingState } from "./LoadingState";
 export { PlanetInfoCard } from "./PlanetInfoCard";
 export { ResidentCard } from "./ResidentCard";
+export { ResidentCardWithSpecies } from "./ResidentCardWithSpecies";
 export { PlanetDetailsHeader } from "./PlanetDetailsHeader";
 export { PlanetInfoGrid } from "./PlanetInfoGrid";
 export { PlanetResidentsSection } from "./PlanetResidentsSection";
