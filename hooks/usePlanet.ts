@@ -24,7 +24,7 @@ export const usePlanet = (id: string): UsePlanetResult => {
     setError(null);
 
     try {
-      const data: Planet = await fetchPlanetById(id);
+      const data = await fetchPlanetById<Planet>(id);
       setPlanet(data);
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Unknown error"));

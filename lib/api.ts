@@ -24,7 +24,8 @@ export const fetchPlanets = async (
   return fetchFromSWAPI(`/planets${query ? `?${query}` : ""}`);
 };
 
-export const fetchPlanetById = (id: string) => fetchFromSWAPI(`/planets/${id}`);
+export const fetchPlanetById = <T>(id: string): Promise<T> =>
+  fetchFromSWAPI(`/planets/${id}`);
 
 export const fetchByUrl = <T>(url: string): Promise<T> => {
   const endpoint = url.replace(env.NEXT_PUBLIC_API_URL, "");
