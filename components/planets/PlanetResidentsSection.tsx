@@ -1,7 +1,7 @@
 import { ResidentCard } from "./ResidentCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "./EmptyState";
-import type { Resident } from "@/types";
+import { Resident } from "@/types/resident.types";
 
 interface PlanetResidentsSectionProps {
   residents: Resident[];
