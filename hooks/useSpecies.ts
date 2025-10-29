@@ -8,15 +8,17 @@ interface UseSpeciesResult {
   error: Error | null;
 }
 
+const hasUrls = (urls: string[]): boolean => urls.length > 0;
+
 export const useSpecies = (urls: string[]): UseSpeciesResult => {
   const [species, setSpecies] = useState<Species[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const hasUrls = urls.length > 0;
+  const urlsString = urls.join(",");
 
-    if (!hasUrls) {
+  useEffect(() => {
+    if (!hasUrls(urls)) {
       setSpecies([]);
       setLoading(false);
       return;
@@ -37,7 +39,8 @@ export const useSpecies = (urls: string[]): UseSpeciesResult => {
     };
 
     fetchSpecies();
-  }, [urls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlsString]);
 
   return { species, loading, error };
 };

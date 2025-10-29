@@ -1,7 +1,6 @@
-import { useMemo } from "react";
-import { useSpecies } from "@/hooks/useSpecies";
-import { Resident, ResidentWithDetails } from "@/types/resident.types";
+import { Resident } from "@/types/resident.types";
 import { ResidentCard } from "./ResidentCard";
+import { useResidentWithDetails } from "@/hooks/useResidentWithDetails";
 
 interface ResidentCardWithSpeciesProps {
   resident: Resident;
@@ -10,14 +9,10 @@ interface ResidentCardWithSpeciesProps {
 export function ResidentCardWithSpecies({
   resident,
 }: ResidentCardWithSpeciesProps) {
-  const { species, loading: speciesLoading } = useSpecies(resident.species);
-
-  const residentWithSpecies = useMemo<ResidentWithDetails>(() => {
-    return {
-      ...resident,
-      speciesDetails: species,
-    };
-  }, [resident, species]);
+  const { resident: residentWithSpecies } = useResidentWithDetails(resident, {
+    includeSpecies: true,
+    includeVehicles: false,
+  });
 
   return <ResidentCard resident={residentWithSpecies} />;
 }

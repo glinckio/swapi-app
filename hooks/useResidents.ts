@@ -8,15 +8,17 @@ interface UseResidentsResult {
   error: Error | null;
 }
 
+const hasUrls = (urls: string[]): boolean => urls.length > 0;
+
 export const useResidents = (urls: string[]): UseResidentsResult => {
   const [residents, setResidents] = useState<Resident[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const hasUrls = urls.length > 0;
+  const urlsString = urls.join(",");
 
-    if (!hasUrls) {
+  useEffect(() => {
+    if (!hasUrls(urls)) {
       setResidents([]);
       setLoading(false);
       return;
@@ -37,7 +39,8 @@ export const useResidents = (urls: string[]): UseResidentsResult => {
     };
 
     fetchResidents();
-  }, [urls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlsString]);
 
   return { residents, loading, error };
 };
