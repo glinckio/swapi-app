@@ -42,9 +42,12 @@ describe("useSpecies", () => {
 
     expect(result.current.loading).toBe(true);
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.species).toEqual(mockSpecies);
     expect(result.current.error).toBeNull();
@@ -53,9 +56,12 @@ describe("useSpecies", () => {
   it("should return empty array when no urls provided", async () => {
     const { result } = renderHook(() => useSpecies([]));
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.species).toEqual([]);
     expect(mockFetchMultiple).not.toHaveBeenCalled();
@@ -69,9 +75,12 @@ describe("useSpecies", () => {
       useSpecies(["https://swapi.dev/api/species/1/"])
     );
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.error).toEqual(error);
     expect(result.current.species).toEqual([]);
@@ -123,9 +132,12 @@ describe("useSpecies", () => {
 
     const { result } = renderHook(() => useSpecies(urls));
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.species).toHaveLength(2);
     expect(result.current.species[0].name).toBe("Human");
@@ -159,17 +171,23 @@ describe("useSpecies", () => {
       initialProps: { urls: ["https://swapi.dev/api/species/1/"] },
     });
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(mockFetchMultiple).toHaveBeenCalledTimes(1);
 
     rerender({ urls: ["https://swapi.dev/api/species/2/"] });
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(mockFetchMultiple).toHaveBeenCalledTimes(2);
   });

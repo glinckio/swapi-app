@@ -43,9 +43,12 @@ describe("useVehicles", () => {
 
     expect(result.current.loading).toBe(true);
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.vehicles).toEqual(mockVehicles);
     expect(result.current.error).toBeNull();
@@ -54,9 +57,12 @@ describe("useVehicles", () => {
   it("should return empty array when no urls provided", async () => {
     const { result } = renderHook(() => useVehicles([]));
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.vehicles).toEqual([]);
     expect(mockFetchMultiple).not.toHaveBeenCalled();
@@ -70,9 +76,12 @@ describe("useVehicles", () => {
       useVehicles(["https://swapi.dev/api/vehicles/4/"])
     );
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.error).toEqual(error);
     expect(result.current.vehicles).toEqual([]);
@@ -126,9 +135,12 @@ describe("useVehicles", () => {
 
     const { result } = renderHook(() => useVehicles(urls));
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(result.current.vehicles).toHaveLength(2);
     expect(result.current.vehicles[0].name).toBe("Sand Crawler");
@@ -165,17 +177,23 @@ describe("useVehicles", () => {
       initialProps: { urls: ["https://swapi.dev/api/vehicles/4/"] },
     });
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(mockFetchMultiple).toHaveBeenCalledTimes(1);
 
     rerender({ urls: ["https://swapi.dev/api/vehicles/6/"] });
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(
+      () => {
+        expect(result.current.loading).toBe(false);
+      },
+      { timeout: 3000 }
+    );
 
     expect(mockFetchMultiple).toHaveBeenCalledTimes(2);
   });

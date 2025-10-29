@@ -8,15 +8,17 @@ interface UseFilmsResult {
   error: Error | null;
 }
 
+const hasUrls = (urls: string[]): boolean => urls.length > 0;
+
 export const useFilms = (urls: string[]): UseFilmsResult => {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const hasUrls = urls.length > 0;
+  const urlsString = urls.join(",");
 
-    if (!hasUrls) {
+  useEffect(() => {
+    if (!hasUrls(urls)) {
       setFilms([]);
       setLoading(false);
       return;
@@ -37,7 +39,8 @@ export const useFilms = (urls: string[]): UseFilmsResult => {
     };
 
     fetchFilms();
-  }, [urls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlsString]);
 
   return { films, loading, error };
 };

@@ -7,12 +7,19 @@ import {
 } from "@/components/ui/card";
 import { Resident, ResidentWithDetails } from "@/types/resident.types";
 import { displayValue, capitalizeWords } from "@/utils";
+import {
+  renderSpeciesList,
+  renderVehicleList,
+} from "@/utils/resident.render.utils";
 
 interface ResidentCardProps {
   resident: Resident | ResidentWithDetails;
 }
 
 export function ResidentCard({ resident }: ResidentCardProps) {
+  const speciesList = renderSpeciesList(resident);
+  const vehicleList = renderVehicleList(resident);
+
   return (
     <Card className="bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700 hover:border-blue-500 transition-colors">
       <CardHeader className="pb-3">
@@ -50,48 +57,16 @@ export function ResidentCard({ resident }: ResidentCardProps) {
             </p>
           </div>
         </div>
-        {resident.species.length > 0 && (
+        {speciesList && (
           <div className="mt-4 pt-4 border-t border-gray-700">
             <span className="text-xs text-gray-400">Species</span>
-            <div className="mt-1 space-y-1">
-              {resident.species.length > 0 &&
-              "speciesDetails" in resident &&
-              resident.speciesDetails &&
-              resident.speciesDetails.length > 0 ? (
-                resident.speciesDetails.map((s, i) => (
-                  <p key={i} className="text-sm font-semibold text-purple-400">
-                    {s.name}
-                  </p>
-                ))
-              ) : (
-                <p className="text-sm font-semibold text-purple-400">
-                  {resident.species.length} species
-                </p>
-              )}
-            </div>
+            <div className="mt-1 space-y-1">{speciesList}</div>
           </div>
         )}
-        {resident.vehicles.length > 0 && (
+        {vehicleList && (
           <div className="mt-2">
             <span className="text-xs text-gray-400">Vehicles</span>
-            <div className="mt-1 space-y-1">
-              {resident.vehicles.length > 0 &&
-              "vehicleDetails" in resident &&
-              resident.vehicleDetails &&
-              resident.vehicleDetails.length > 0 ? (
-                resident.vehicleDetails.map((v, i) => (
-                  <div key={i} className="text-sm text-blue-400">
-                    <p className="font-semibold">{v.name}</p>
-                    <p className="text-xs text-blue-300">{v.model}</p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm font-semibold text-blue-400">
-                  {resident.vehicles.length} vehicle
-                  {resident.vehicles.length !== 1 ? "s" : ""}
-                </p>
-              )}
-            </div>
+            <div className="mt-1 space-y-1">{vehicleList}</div>
           </div>
         )}
       </CardContent>
