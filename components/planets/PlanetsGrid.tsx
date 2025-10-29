@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { Planet } from "@/types";
-import { PlanetCard } from "./PlanetCard";
+import { PlanetCardWithFilms } from "./PlanetCardWithFilms";
 
 interface PlanetsGridProps {
   planets: Planet[];
@@ -13,7 +13,11 @@ export function PlanetsGrid({ planets, onPlanetClick }: PlanetsGridProps) {
   const planetCards = useMemo(
     () =>
       planets.map((planet) => (
-        <PlanetCard key={planet.url} planet={planet} onClick={onPlanetClick} />
+        <PlanetCardWithFilms
+          key={planet.url}
+          planet={planet}
+          onClick={onPlanetClick}
+        />
       )),
     [planets, onPlanetClick]
   );

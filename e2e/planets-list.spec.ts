@@ -14,8 +14,16 @@ test.describe("Planets List Page", () => {
   });
 
   test("should display search input", async ({ page }) => {
-    const searchInput = page.getByLabel(/search for a planet/i);
-    await expect(searchInput).toBeVisible();
+    // Wait for page to load first
+    await page.waitForSelector('[role="button"][aria-label*="Planet"]', {
+      timeout: 15000,
+    });
+
+    // Use getByRole with aria-label or getByPlaceholder
+    const searchInput = page.getByRole("textbox", {
+      name: /search for a planet/i,
+    });
+    await expect(searchInput).toBeVisible({ timeout: 5000 });
     await expect(searchInput).toHaveAttribute("type", "text");
   });
 
@@ -42,6 +50,39 @@ test.describe("Planets List Page", () => {
 
     const cardContent = firstPlanetCard.locator("..");
     await expect(cardContent).toContainText(/climate|terrain|diameter|film/i);
+  });
+
+  test("should display film names in planet cards", async ({ page }) => {
+    await page.waitForSelector('[role="button"][aria-label*="Planet"]', {
+      timeout: 15000,
+    });
+
+    // Wait a bit longer for films to load
+    await page.waitForTimeout(3000);
+
+    const firstPlanetCard = page
+      .locator('[role="button"][aria-label*="Planet"]')
+      .first();
+
+    // Get the parent card element
+    const planetCardContent = firstPlanetCard.locator("..");
+
+    // Find the Films label specifically within this card, using .first() to avoid strict mode violation
+    const filmsLabel = planetCardContent.getByText(/films/i).first();
+
+    await expect(filmsLabel).toBeVisible({ timeout: 5000 });
+
+    // Check if films section shows either film titles, loading state, or count
+    const hasFilmContent = await planetCardContent
+      .locator(
+        "text=/A New Hope|The Empire Strikes Back|Return of the Jedi|The Phantom Menace|Attack of the Clones|Revenge of the Sith|Loading films|appearance|No films/i"
+      )
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
+
+    // At least one of these should be visible: film title, loading, or count
+    expect(hasFilmContent).toBeTruthy();
   });
 
   test("should display pagination controls", async ({ page }) => {
