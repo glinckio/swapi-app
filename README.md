@@ -7,7 +7,8 @@ A modern Next.js application for browsing Star Wars API (SWAPI) data with compre
 - **Framework**: [Next.js 16](https://nextjs.org) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com)
-- **Testing**: [Jest](https://jestjs.io) + [React Testing Library](https://testing-library.com/react)
+- **Unit Testing**: [Jest](https://jestjs.io) + [React Testing Library](https://testing-library.com/react)
+- **E2E Testing**: [Playwright](https://playwright.dev)
 - **Linting**: [ESLint](https://eslint.org) + [Prettier](https://prettier.io)
 - **Git Hooks**: [Husky](https://typicode.github.io/husky) + [lint-staged](https://github.com/lint-staged/lint-staged)
 - **Commit Standards**: [Commitlint](https://commitlint.js.org) + [Commitizen](https://github.com/commitizen/cz-cli)
@@ -72,9 +73,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the r
 
 ### Testing
 
-- `npm run test` - Run tests
+- `npm run test` - Run unit tests
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:coverage` - Run tests with coverage report
+- `npm run test:e2e` - Run E2E tests with Playwright
+- `npm run test:e2e:ui` - Run E2E tests with UI mode
+- `npm run test:e2e:headed` - Run E2E tests with visible browser
 
 ### Git Workflow
 
@@ -82,12 +86,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the r
 
 ## 🧪 Testing
 
-This project uses **Jest** and **React Testing Library** for testing.
+This project uses **Jest** and **React Testing Library** for unit tests, and **Playwright** for E2E tests.
 
-### Running Tests
+### Unit Tests
 
 ```bash
-# Run all tests
+# Run all unit tests
 npm test
 
 # Run tests in watch mode
@@ -97,9 +101,25 @@ npm run test:watch
 npm run test:coverage
 ```
 
+### E2E Tests
+
+```bash
+# Run all E2E tests
+npm run test:e2e
+
+# Run E2E tests with UI mode
+npm run test:e2e:ui
+
+# Run E2E tests with visible browser
+npm run test:e2e:headed
+
+# View E2E test report
+npx playwright show-report
+```
+
 ### Writing Tests
 
-Example test structure:
+**Unit Tests** example:
 
 ```typescript
 import { render, screen } from "@testing-library/react";
@@ -112,6 +132,19 @@ describe("Component", () => {
   });
 });
 ```
+
+**E2E Tests** example:
+
+```typescript
+import { test, expect } from "@playwright/test";
+
+test("should navigate to planets page", async ({ page }) => {
+  await page.goto("/planets");
+  await expect(page.locator("h1")).toContainText("Planets");
+});
+```
+
+See `e2e/README.md` for more details about E2E tests.
 
 ## 🎯 Git Hooks
 
@@ -178,12 +211,26 @@ This project uses GitHub Actions for continuous integration:
 
 ## 📄 Environment Variables
 
-Create a `.env.local` file in the root directory:
+Environment variables are **optional** as the project has sensible defaults.
+
+To customize, create a `.env.local` file in the root directory:
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` if needed:
 
 ```env
-# Required
+# API Configuration (optional - defaults to https://swapi.dev/api)
 NEXT_PUBLIC_API_URL=https://swapi.dev/api
+
+# E2E Testing Configuration (optional - defaults to http://localhost:3000)
+# Only needed if testing against a different server
+# PLAYWRIGHT_TEST_BASE_URL=http://localhost:3000
 ```
+
+**Note**: The application works out of the box without creating `.env.local` since default values are provided.
 
 ## 🛠️ Development Guidelines
 
