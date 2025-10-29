@@ -18,11 +18,15 @@ describe("Environment Configuration", () => {
     expect(env.NEXT_PUBLIC_API_URL).toBe("https://swapi.dev/api");
   });
 
-  it("returns undefined when NEXT_PUBLIC_API_URL is not set", async () => {
+  it("uses default value when NEXT_PUBLIC_API_URL is not set", async () => {
+    const originalValue = process.env.NEXT_PUBLIC_API_URL;
     delete process.env.NEXT_PUBLIC_API_URL;
+    jest.resetModules();
 
     const env = (await import("./env")).default;
 
-    expect(env.NEXT_PUBLIC_API_URL).toBeUndefined();
+    expect(env.NEXT_PUBLIC_API_URL).toBe("https://swapi.dev/api");
+
+    process.env.NEXT_PUBLIC_API_URL = originalValue;
   });
 });
