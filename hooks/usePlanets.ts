@@ -34,7 +34,12 @@ export const usePlanets = (options?: UsePlanetsOptions): UsePlanetsResult => {
 
       const data = await fetchPlanetsFromAPI(options?.search, options?.page);
 
-      setPlanets(data.results);
+      // Sort planets alphabetically by name
+      const sortedPlanets = data.results.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
+      setPlanets(sortedPlanets);
       setTotalPages(Math.ceil(data.count / PLANETS_PER_PAGE));
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Unknown error"));

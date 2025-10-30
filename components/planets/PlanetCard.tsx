@@ -7,13 +7,21 @@ import {
 } from "@/components/ui/card";
 import { displayValue } from "@/utils";
 import type { Planet } from "@/types";
+import type { Film } from "@/types/film.types";
 
 interface PlanetCardProps {
   planet: Planet;
+  films?: Film[];
+  loadingFilms?: boolean;
   onClick: (planetUrl: string) => void;
 }
 
-export function PlanetCard({ planet, onClick }: PlanetCardProps) {
+export function PlanetCard({
+  planet,
+  films = [],
+  loadingFilms = false,
+  onClick,
+}: PlanetCardProps) {
   const handleClick = () => onClick(planet.url);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -60,12 +68,33 @@ export function PlanetCard({ planet, onClick }: PlanetCardProps) {
               {displayValue(planet.diameter)} km
             </span>
           </div>
-          <div className="flex items-center justify-between py-2">
-            <span className="text-sm font-medium text-gray-400">Films</span>
-            <span className="text-sm font-semibold text-purple-400">
-              {planet.films.length} appearance
-              {planet.films.length !== 1 ? "s" : ""}
+          <div className="flex flex-col py-2">
+            <span className="text-sm font-medium text-gray-400 mb-2">
+              Films
             </span>
+            {loadingFilms ? (
+              <span className="text-xs text-gray-500 italic">
+                Loading films...
+              </span>
+            ) : films.length > 0 ? (
+              <div className="space-y-1">
+                {films.map((film) => (
+                  <span
+                    key={film.url}
+                    className="text-xs font-semibold text-purple-400 block"
+                  >
+                    {film.title}
+                  </span>
+                ))}
+              </div>
+            ) : planet.films.length > 0 ? (
+              <span className="text-xs text-gray-500 italic">
+                {planet.films.length} appearance
+                {planet.films.length !== 1 ? "s" : ""}
+              </span>
+            ) : (
+              <span className="text-xs text-gray-500 italic">No films</span>
+            )}
           </div>
         </div>
       </CardContent>
